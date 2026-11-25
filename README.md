@@ -15,6 +15,7 @@ A GitHub template for research projects: cases investigated one by one, notes ta
 ```sh
 make install                                   # MkDocs and dependencies
 make doctor                                    # check required and optional tools
+make hooks                                     # enable the git hooks (make init does this too)
 make init NAME=my-research TITLE="My Research"
 make new-case NAME=first-case TITLE="First Case"
 make note TITLE="Something I saw" CASE=first-case
@@ -29,6 +30,15 @@ make serve                                     # docs at http://127.0.0.1:8000
 - `make new-media`: creates a media project at `media/<format>/<name>/`.
 - `make results`: regenerates `docs/results.md` from `cases/*/case.yaml`.
 - `make doctor`: reports missing tools and how to install them.
+- `make hooks`: turns on the git hooks that check branch names and commit messages.
+
+## Git conventions
+
+- Branches are `main` or `<type>/<kebab-description>`, for example `feat/note-search` or `fix/init-marker`. Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`, `build`, `perf`, `style`, `revert`.
+- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/): `type(scope)!: subject`, header at most 72 characters, no trailing period.
+- Pull requests are squash-merged and the PR title is the commit message, so it follows the same rule.
+- `make hooks` enables the checks locally (`make init` runs it for you). The `conventions` CI job checks the branch name, the PR title and the commit headers on every pull request.
+- Optional: a GitHub ruleset (Settings -> Rules) can also restrict branch names on the server. It lives in GitHub settings, so repositories created from this template do not inherit it.
 
 ## Repository structure
 
@@ -65,6 +75,7 @@ Run `make help` for the full, always current list.
 | `make clean` | Remove built site |
 | `make test` | Run the unit tests |
 | `make doctor` | Check tools and print how to fix what is missing |
+| `make hooks` | Enable the git hooks (branch name and Conventional Commits checks) |
 | `make init NAME=... [TITLE=...]` | Make the template yours (once) |
 | `make new-case NAME=... [TITLE=...]` | Scaffold a case |
 | `make note TITLE=... [TYPE= CASE= TAGS= BODY=]` | Capture a note |

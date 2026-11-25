@@ -24,3 +24,23 @@ jobs:
             echo "== $m"
             make media-build M="$m" || exit 1
           done
+
+  conventions:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check branch name, PR title and commit headers
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          python3 scripts/gitcheck.py branch "$HEAD_REF"
+          python3 scripts/gitcheck.py title "$PR_TITLE"
+          python3 scripts/gitcheck.py commits "origin/$BASE_REF..HEAD"
