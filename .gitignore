@@ -1,0 +1,25 @@
+# Dependencies and caches
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# MkDocs build output
+site/
+
+# Hyperframes renders, audio and captions (approved finals go to media/kit/)
+media/**/renders/
+media/**/assets/audio/
+media/**/assets/captions/
+
+# Generated deck files (rebuilt by make media-build)
+media/*/*/index.html
+media/*/*/compositions/
+media/*/*/styles/theme.css
+media/*/*/notes.html
+
+# Editor and OS
+.vscode/*
+!.vscode/settings.json
+.DS_Store
+*.env

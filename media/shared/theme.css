@@ -1,0 +1,226 @@
+/*
+ * Media theme: single source of truth for colors, type and spacing.
+ * Slides reference tokens (var(--...)) and the .slide-* classes; never hard-code values.
+ * Canvas size comes from the format: <html data-format="..."> (set by the engine) overrides
+ * --w/--h and the type scale and safe margins below. Default is landscape 1920x1080.
+ * Contrast: text on --bg meets WCAG AA (>= 4.5:1).
+ */
+:root {
+  /* Surfaces (dark, layered) */
+  --bg: #0b1020;
+  --bg-elevated: #131a31;
+  --bg-subtle: #1b2442;
+  --border: #2a3560;
+
+  /* Text */
+  --text: #f1f4ff;
+  --text-muted: #a9b4d6;
+  --text-faint: #8d98bd;
+
+  /* Brand / accents */
+  --primary: #5b8cff;
+  --primary-strong: #3d6df0;
+  --accent: #22d3c5;
+  --highlight: #ffc857;
+
+  /* Semantic */
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #f87171;
+
+  --gradient-brand: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  --glow-primary: radial-gradient(circle at 20% 20%, rgba(91, 140, 255, 0.28), transparent 55%);
+  --glow-accent: radial-gradient(circle at 85% 90%, rgba(34, 211, 197, 0.18), transparent 50%);
+
+  /* Typography */
+  --font-sans: Inter, "Segoe UI", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", ui-monospace, Consolas, monospace;
+  --fs-display: 120px;
+  --fs-h1: 84px;
+  --fs-h2: 56px;
+  --fs-body: 36px;
+  --fs-caption: 26px;
+  --fs-code: 30px;
+
+  /* Spacing (8px grid) & safe area */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 64px;
+  --space-6: 96px;
+  --safe-x: 120px;
+  --safe-y: 90px;
+  --radius: 20px;
+
+  /* Canvas (per-format overrides below) */
+  --w: 1920px;
+  --h: 1080px;
+}
+
+/* ---- Per-format size tokens ---- */
+/* social: 1080x1350 portrait still */
+[data-format="social"] {
+  --w: 1080px; --h: 1350px;
+  --fs-display: 92px; --fs-h1: 68px; --fs-h2: 48px; --fs-body: 34px; --fs-caption: 24px; --fs-code: 26px;
+  --safe-x: 80px; --safe-y: 80px;
+}
+/* shorts: 1080x1920 full-height vertical; extra top/bottom margin keeps clear of platform UI */
+[data-format="shorts"] {
+  --w: 1080px; --h: 1920px;
+  --fs-display: 96px; --fs-h1: 72px; --fs-h2: 52px; --fs-body: 38px; --fs-caption: 26px; --fs-code: 28px;
+  --safe-x: 72px; --safe-y: 180px;
+}
+/* Portrait canvases stack what landscape lays out side by side */
+[data-format="social"] .row, [data-format="shorts"] .row { flex-direction: column; gap: var(--space-3); }
+[data-format="social"] .grid-2, [data-format="social"] .grid-3,
+[data-format="shorts"] .grid-2, [data-format="shorts"] .grid-3 { grid-template-columns: 1fr; }
+[data-format="social"] .metric, [data-format="shorts"] .metric { font-size: 200px; }
+[data-format="social"] .points li, [data-format="shorts"] .points li { font-size: 34px; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body {
+  width: var(--w);
+  height: var(--h);
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Slide base ---- */
+.slide {
+  position: absolute;
+  inset: 0;
+  padding: var(--safe-y) var(--safe-x);
+  background: var(--glow-primary), var(--glow-accent), var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+.slide-center { justify-content: center; }
+
+/* ---- Type ---- */
+.slide-eyebrow {
+  font-size: var(--fs-caption);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.slide-display { font-size: var(--fs-display); font-weight: 800; line-height: 1.04; letter-spacing: -0.035em; }
+.slide-title   { font-size: var(--fs-h1); font-weight: 700; line-height: 1.08; letter-spacing: -0.03em; }
+.slide-heading { font-size: var(--fs-h2); font-weight: 650; line-height: 1.15; letter-spacing: -0.02em; }
+.slide-body    { font-size: var(--fs-body); font-weight: 400; line-height: 1.4; color: var(--text-muted); }
+.slide-caption { font-size: var(--fs-caption); color: var(--text-faint); }
+.slide-code    { font-family: var(--font-mono); font-size: var(--fs-code); background: var(--bg-elevated);
+                 border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-4); }
+
+.text-gradient { background: var(--gradient-brand); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.rule { width: 160px; height: 8px; border-radius: 4px; background: var(--gradient-brand); }
+
+/* ---- Components ---- */
+.card { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-4); }
+.tag  { display: inline-block; padding: var(--space-1) var(--space-3); border-radius: 999px;
+        background: var(--bg-subtle); color: var(--text-muted); font-size: var(--fs-caption); }
+
+/* ---- Layout helpers ---- */
+.stack-2 > * + * { margin-top: var(--space-2); }
+.stack-3 > * + * { margin-top: var(--space-3); }
+.stack-4 > * + * { margin-top: var(--space-4); }
+.grow { flex: 1; }
+.row { display: flex; gap: var(--space-5); align-items: stretch; }
+.col { flex: 1; min-width: 0; }
+.grid-2, .grid-3 { display: grid; gap: var(--space-3); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.center { text-align: center; align-items: center; }
+
+/* ---- Status colors (win / fail / mixed) ---- */
+.is-win   { --status: var(--success); }
+.is-fail  { --status: var(--danger); }
+.is-mixed { --status: var(--warning); }
+.status-text { color: var(--status); }
+.status-pill {
+  display: inline-block; padding: var(--space-1) var(--space-3); border-radius: 999px;
+  font-size: var(--fs-caption); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--bg); background: var(--status);
+}
+
+/* ---- Big metric ---- */
+.metric { font-size: 260px; font-weight: 800; line-height: 0.95; letter-spacing: -0.05em; color: var(--status, var(--primary)); }
+.metric-sm { font-size: 150px; }
+.metric-label { font-size: var(--fs-body); color: var(--text-muted); }
+.panel-status { border-left: 8px solid var(--status); }
+
+/* ---- Cards ---- */
+.card-title { font-size: 44px; font-weight: 700; letter-spacing: -0.01em; }
+.card-meta  { font-size: 32px; color: var(--text-muted); line-height: 1.35; }
+.card-top   { border-top: 6px solid var(--status, var(--primary)); }
+.num-badge  { font-size: var(--fs-caption); font-weight: 700; color: var(--accent); letter-spacing: 0.1em; }
+
+/* ---- Lists ---- */
+.points { list-style: none; }
+.points li { position: relative; padding-left: 44px; font-size: 38px; line-height: 1.35; color: var(--text); }
+.points li + li { margin-top: var(--space-3); }
+.points li::before {
+  content: ""; position: absolute; left: 0; top: 0.5em; width: 18px; height: 18px; border-radius: 50%;
+  background: var(--status, var(--accent));
+}
+.points b { color: var(--highlight); font-weight: 650; }
+
+/* ---- Quote / callout ---- */
+.callout { font-size: var(--fs-h2); font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+.quote   { border-left: 8px solid var(--highlight); padding-left: var(--space-4); }
+
+/* ---- Footer (section + progress) ---- */
+.slide-footer {
+  position: absolute; left: var(--safe-x); right: var(--safe-x); bottom: 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 22px; color: var(--text-faint); letter-spacing: 0.08em; text-transform: uppercase;
+}
+.progress { position: absolute; left: 0; bottom: 0; height: 6px; background: var(--gradient-brand); }
+
+/* ---- Links ---- */
+.link-item { display: flex; flex-direction: column; gap: 4px; padding: var(--space-3) var(--space-4);
+             background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius); }
+.link-name { font-size: 34px; font-weight: 650; }
+.link-url  { font-family: var(--font-mono); font-size: 26px; color: var(--accent); }
+.link-desc { font-size: 24px; color: var(--text-muted); }
+
+/* ---- Captions (only built with --captions, on slides that have a script) ---- */
+.slide.with-captions { padding-bottom: 210px; }
+.captions { position: absolute; left: var(--safe-x); right: var(--safe-x); bottom: 88px; height: 112px; }
+.cap {
+  position: absolute; inset: 0; opacity: 0;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  padding: 0 var(--space-4); border-radius: var(--radius);
+  background: rgba(11, 16, 32, 0.82); border: 1px solid var(--border);
+  font-size: 38px; line-height: 1.25; color: var(--text);
+}
+.with-captions .card-title { font-size: 38px; }
+.with-captions .card-meta  { font-size: 28px; }
+.with-captions .points li  { font-size: 34px; }
+.with-captions .slide-body { font-size: 32px; }
+.with-captions .link-item { padding: var(--space-2) var(--space-4); gap: 2px; }
+.with-captions .link-name { font-size: 30px; }
+.with-captions .link-url  { font-size: 23px; }
+.with-captions .link-desc { font-size: 21px; }
+.with-captions .num-badge { font-size: 22px; }
+.with-captions .card { padding: var(--space-3) var(--space-4); }
+
+/* ---- Screenshots, flow, agenda ---- */
+.shot { display: block; border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 12px 40px rgba(0,0,0,0.45); object-fit: cover; object-position: top left; }
+.shot-cap { font-size: 22px; color: var(--text-faint); margin-top: 12px; text-align: center; }
+.flow { display: flex; flex-direction: column; align-items: stretch; }
+.flow-node { background: var(--bg-elevated); border: 1px solid var(--border); border-left: 8px solid var(--status, var(--primary)); border-radius: 16px; padding: 14px 24px; }
+.flow-node b { display: block; font-size: 30px; font-weight: 650; color: var(--text); }
+.flow-node span { display: block; font-size: 24px; color: var(--text-muted); margin-top: 2px; }
+.flow-arrow { text-align: center; font-size: 28px; line-height: 34px; color: var(--accent); }
+.agenda { display: flex; gap: var(--space-2); }
+.agenda-item { flex: 1; padding: 10px 20px; border-radius: 14px; border: 1px solid var(--border); font-size: 26px; color: var(--text-faint); }
+.agenda-item.is-now { border-color: var(--accent); color: var(--text); background: var(--bg-elevated); font-weight: 650; }
+.agenda-item.is-done { color: var(--text-muted); }
+[data-format="social"] .captions, [data-format="shorts"] .captions { bottom: 140px; }
+[data-format="social"] .cap, [data-format="shorts"] .cap { font-size: 34px; }

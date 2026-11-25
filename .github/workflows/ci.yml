@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install mkdocs mkdocs-material pyyaml
+      - run: python3 -m unittest discover -s tests
+      - run: mkdocs build --strict
+      - name: Build every media project
+        run: |
+          for b in media/*/*/build.py; do
+            [ -e "$b" ] || continue
+            m=${b#media/}; m=${m%/build.py}
+            [ "${m%%/*}" = shared ] && continue
+            echo "== $m"
+            make media-build M="$m" || exit 1
+          done

@@ -1,0 +1,58 @@
+site_name: Research Template
+site_description: Research notes, cases and results
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+exclude_docs: |
+  superpowers/
+
+nav:
+  - Home: index.md
+  - Research:
+      - Executive Summary: executive-summary.md
+      - Overview: research-overview.md
+      - Definition: research-definition.md
+      - Full Report: research-report.md
+      - Summary: research-report-summary.md
+      - Case Ideas & Definitions: cases-ideas-and-definition.md
+      - Case Report Template: case-report-template.md
+  - Ideas:
+      - Blog Post Ideas: blog-post-ideas.md
+      - Blog Post Drafts: blog-post-drafts.md
+      - Event Ideas: event-ideas.md
+      - References: references.md
+  - Results: results.md
+  - Case Reports:
+      - Cases Index: cases/index.md
+      # new-case:insert
+
+markdown_extensions:
+  - tables
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - toc:
+      permalink: true

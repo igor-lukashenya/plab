@@ -1,0 +1,1 @@
+A placeholder explainer scene. A client sends a request to a service, the service asks the data store, and the answer travels back.

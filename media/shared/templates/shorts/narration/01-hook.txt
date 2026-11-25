@@ -1,0 +1,1 @@
+Placeholder hook that grabs attention in the first second.
