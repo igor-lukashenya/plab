@@ -56,6 +56,16 @@ class DoctorTests(unittest.TestCase):
         self.assertFalse(hf.ok)
         self.assertIn("HF_VERSION", hf.fix)
 
+    def test_git_hooks_check_is_optional(self):
+        results = doctor.check(probes={**ALL_OK, "git-hooks": False})
+        hooks = next(c for c in results if c.name == "git-hooks")
+        self.assertFalse(hooks.ok)
+        self.assertFalse(hooks.required)
+        self.assertEqual(hooks.fix, "make hooks")
+        code, out = run_main({**ALL_OK, "git-hooks": False})
+        self.assertEqual(code, 0)
+        self.assertIn("make hooks", out)
+
     def test_required_flags(self):
         required = {c.name for c in doctor.check(probes=ALL_OK) if c.required}
         self.assertEqual(required, {"node", "python", "mkdocs", "npx", "hyperframes"})

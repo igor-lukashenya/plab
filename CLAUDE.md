@@ -52,6 +52,15 @@ Run `make help` for the always current list.
 - When editing media compositions, invoke the `/hyperframes` skill first if it is installed.
 - Do not copy the Hyperframes boilerplate agent files into media projects.
 
+## Git conventions
+
+Enforced by `scripts/gitcheck.py`, the hooks in `.githooks/` (enable them once with `make hooks`; `make init` does it for you) and the `conventions` CI job on pull requests.
+
+- Branches: `main`, or `<type>/<kebab-description>` with at most 50 characters in the description. Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`, `build`, `perf`, `style`, `revert`. Valid: `feat/note-search`, `fix/123-init-marker`. Invalid: `wip`, `Feature/Note`, `feat/Note_Search`.
+- Commits follow Conventional Commits: `type(scope)!: subject`. Scope and `!` are optional, the type is lowercase, no trailing period, the whole header at most 72 characters. Valid: `feat(notes): add note search`, `fix: reject empty title`, `refactor(media)!: rename build flags`. Invalid: `Added search`, `Feat: x`, `fix: done.`. Merge, `Revert "..."` and `fixup!` commits are allowed as git writes them.
+- Pull requests are squash-merged, and the PR title becomes the commit message, so write it as a commit header.
+- Agents: create a conventionally named branch before committing, and never commit on `main` unless the owner says so. Never use `--no-verify`. `SKIP_GITCHECK=1` is the owner's escape hatch, never yours.
+
 ## Docs conventions
 
 - Docs are Markdown under `docs/`, built by MkDocs with `make build` (strict: broken links fail).
@@ -63,6 +72,6 @@ Run `make help` for the always current list.
 
 1. Use this repository as a template on GitHub (tick *Template repository* in the repository settings of the original so the button appears).
 2. Clone the new repository and run `make install`, then `make doctor`.
-3. Run `make init NAME=my-research TITLE="My Research"` once.
+3. Run `make init NAME=my-research TITLE="My Research"` once (it also enables the git hooks; run `make hooks` yourself in a repo that already exists).
 4. Add cases with `make new-case`, capture notes with `make note`.
 5. To publish the docs, open *Settings -> Pages -> Source* on GitHub and choose *GitHub Actions*.

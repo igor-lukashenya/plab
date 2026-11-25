@@ -17,7 +17,7 @@ media_on = $(if $(filter command line,$(origin $(1))),$(if $(filter-out 0,$($(1)
 media_build_cmd = $(PYTHON) $(MEDIA_DIR)/build.py $(if $(call media_on,CAPTIONS),--captions) $(if $(call media_on,AUDIO),--audio)
 hf = npx --yes hyperframes@$(HF_VERSION)
 
-.PHONY: install serve build clean test new-case new-media init note results doctor help slides-deps slides-venv slides-install media-audio media-captions media-build media-dev media-check media-render media-png media-pdf media-check-all
+.PHONY: install serve build clean test new-case new-media init hooks note results doctor help slides-deps slides-venv slides-install media-audio media-captions media-build media-dev media-check media-render media-png media-pdf media-check-all
 
 ## Install MkDocs and dependencies (falls back to a local .venv if pip is externally managed)
 install:
@@ -54,6 +54,12 @@ new-media:
 init:
 	$(if $(filter command line,$(origin NAME)),,$(error NAME is required: make init NAME=my-research))
 	INIT_NAME=$(call shq,$(value NAME)) INIT_TITLE=$(call shq,$(if $(filter command line,$(origin TITLE)),$(value TITLE),$(value NAME))) $(PYTHON) scripts/init.py
+	@if [ -e .git ]; then $(MAKE) --no-print-directory hooks; fi
+
+## Enable the repo git hooks (branch name and Conventional Commits checks)
+hooks:
+	@git rev-parse --is-inside-work-tree >/dev/null 2>&1 || { echo "make hooks: not inside a git repository, run git init first" >&2; exit 1; }
+	git config core.hooksPath .githooks
 
 ## Capture a note: make note TITLE="..." [TYPE=observation] [CASE=slug] [TAGS=a,b] [BODY="..."]
 note:

@@ -56,6 +56,15 @@ class MakefileQuotingTest(unittest.TestCase):
                 self.assertEqual(yaml.safe_load((root / "mkdocs.yml").read_text(encoding="utf-8"))["site_name"], title)
                 self.assertEqual((root / ".template-initialised").read_text(encoding="utf-8"), f"demo\n{title}\n")
 
+    def test_init_enables_git_hooks_inside_a_git_repo(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = make_copy(tmp)
+            subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+            r = make(root, "NAME=demo", "init")
+            self.assertEqual(r.returncode, 0, r.stderr)
+            out = subprocess.run(["git", "config", "core.hooksPath"], cwd=root, capture_output=True, text=True)
+            self.assertEqual(out.stdout.strip(), ".githooks")
+
     def test_note_values_arrive_literally(self):
         for title in TITLES:
             with self.subTest(title=title), tempfile.TemporaryDirectory() as tmp:

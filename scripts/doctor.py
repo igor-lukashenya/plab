@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CHECK_NAMES = ("node", "python", "mkdocs", "npx", "hyperframes", "ffmpeg", "espeak-ng", "chrome-libs")
+CHECK_NAMES = ("node", "python", "mkdocs", "npx", "hyperframes", "ffmpeg", "espeak-ng", "chrome-libs", "git-hooks")
 
 
 @dataclass
@@ -62,6 +62,15 @@ def _hyperframes_ok(env):
     return done.returncode == 0
 
 
+def _git_hooks_ok(env):
+    try:
+        out = subprocess.run(["git", "-C", str(ROOT), "config", "core.hooksPath"],
+                             capture_output=True, text=True, timeout=10).stdout
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return out.strip() == ".githooks"
+
+
 def default_probes(env):
     which = lambda tool: bool(shutil.which(tool, path=env.get("PATH")))  # noqa: E731
     return {
@@ -73,6 +82,7 @@ def default_probes(env):
         "ffmpeg": which("ffmpeg"),
         "espeak-ng": which("espeak-ng"),
         "chrome-libs": _chrome_libs_ok(env),
+        "git-hooks": _git_hooks_ok(env),
     }
 
 
@@ -86,6 +96,7 @@ SPECS = (
     ("ffmpeg", False, "make slides-deps"),
     ("espeak-ng", False, "make slides-deps"),
     ("chrome-libs", False, "make slides-deps"),
+    ("git-hooks", False, "make hooks"),
 )
 
 

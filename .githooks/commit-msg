@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+# Conventional Commits check for the commit message in "$1" (rules: scripts/gitcheck.py).
+# SKIP_GITCHECK=1 bypasses it (owner only).
+root=$(git rev-parse --show-toplevel) || exit 1
+exec python3 "$root/scripts/gitcheck.py" message "$1"
