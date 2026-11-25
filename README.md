@@ -68,7 +68,7 @@ New to running a research? Read the [research playbook](docs/how-to-research.md)
 ## Using this template
 
 - The code is MIT licensed (`LICENSE`); change the holder to your own name.
-- `docs/superpowers/` holds the plans and specs used to build the template itself. It is excluded from the site and from `git archive`; delete it in your own project if you don't want it.
+- `docs/superpowers/` holds the plans and specs used to build the template itself. It is excluded from the site and from `git archive`, and `make init` removes it.
 
 ## Make targets
 
