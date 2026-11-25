@@ -61,6 +61,15 @@ class InitTest(unittest.TestCase):
                         "media/deck/example/package.json", "media/deck/example/meta.json", MARKER]),
             )
 
+    def test_init_removes_template_history(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = make_root(tmp)
+            (root / "docs/superpowers/specs").mkdir(parents=True)
+            (root / "docs/superpowers/specs/a.md").write_text("x", encoding="utf-8")
+            changed = init.run(root, "demo", "Demo")
+            self.assertFalse((root / "docs/superpowers").exists())
+            self.assertIn("docs/superpowers/ (removed)", changed)
+
     def test_init_marker_records_name_and_title(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = make_root(tmp)

@@ -3,6 +3,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 from pathlib import Path
 
 TITLE_SENTINEL = "Research Template"
@@ -12,6 +13,8 @@ SLUG_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 
 # Files rewritten by init. Templates under media/shared/templates/ are deliberately absent.
 FIXED_TARGETS = ("mkdocs.yml", "README.md", "docs/index.md", "media/README.md")
+# Template-development history that a new project does not need.
+REMOVE_DIRS = ("docs/superpowers",)
 GLOBS = ("media/*/*/build.py", "media/*/*/package.json", "media/*/*/meta.json")
 
 
@@ -61,8 +64,13 @@ def run(root, name, title):
             updates[path] = new
     for path, text in updates.items():
         path.write_text(text, encoding="utf-8")
+    removed = []
+    for rel in REMOVE_DIRS:
+        if (root / rel).is_dir():
+            shutil.rmtree(root / rel)
+            removed.append(rel + "/ (removed)")
     (root / MARKER).write_text(f"{name}\n{title}\n", encoding="utf-8")
-    changed = [p.relative_to(root).as_posix() for p in updates] + [MARKER]
+    changed = [p.relative_to(root).as_posix() for p in updates] + [MARKER] + removed
     return sorted(changed)
 
 

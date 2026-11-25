@@ -94,7 +94,7 @@ SPECS = (
     ("npx", True, "install Node.js 22 or newer (npx ships with it): https://nodejs.org"),
     ("hyperframes", True, "make slides-install"),
     ("ffmpeg", False, "make slides-deps"),
-    ("espeak-ng", False, "make slides-deps"),
+    ("espeak-ng", False, "make slides-deps (only needed for AUDIO=1 narration)"),
     ("chrome-libs", False, "make slides-deps"),
     ("git-hooks", False, "make hooks"),
 )

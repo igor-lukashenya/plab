@@ -60,10 +60,25 @@ New to running a research? Read the [research playbook](docs/how-to-research.md)
 
 ## Requirements
 
-- Required: Python 3, Node.js 22 or newer with `npx`, MkDocs (`make install`).
+- Required: Python 3, Node.js 22 or newer with `npx`, MkDocs (`make install`, versions pinned in `requirements.txt`).
 - Optional, for media rendering: `ffmpeg`, `espeak-ng` and the Chrome libraries (`make slides-deps` on Debian/Ubuntu/WSL).
 
 `make doctor` checks all of them.
+
+## Using this template
+
+- The code is MIT licensed (`LICENSE`); change the holder to your own name.
+- `docs/superpowers/` holds the plans and specs used to build the template itself. It is excluded from the site and from `git archive`, and `make init` removes it.
+
+## Repository settings
+
+GitHub does not copy these from a template, so set them in *Settings -> General -> Pull Requests* of each new repository:
+
+- Allow squash merging only (turn off merge commits and rebase merging).
+- Default commit message: *Pull request title*, with the body set to *Blank*.
+- Automatically delete head branches.
+
+`gh api -X PATCH repos/OWNER/REPO -F allow_merge_commit=false -F allow_rebase_merge=false -f squash_merge_commit_title=PR_TITLE -f squash_merge_commit_message=BLANK -F delete_branch_on_merge=true` does it in one go.
 
 ## Make targets
 
