@@ -40,6 +40,16 @@ class ConventionsJobTests(unittest.TestCase):
         self.assertIn('gitcheck.py title "$PR_TITLE"', run)
         self.assertIn('gitcheck.py commits "origin/$BASE_REF..HEAD"', run)
 
+    def test_editing_the_pr_title_reruns_the_check(self):
+        wf = workflow()
+        triggers = wf.get("on", wf.get(True))  # PyYAML reads a bare `on:` key as True
+        self.assertIn("edited", triggers["pull_request"]["types"])
+        for default in ("opened", "synchronize", "reopened"):
+            self.assertIn(default, triggers["pull_request"]["types"])
+
+    def test_title_edits_do_not_rerun_the_test_job(self):
+        self.assertIn("edited", workflow()["jobs"]["test"]["if"])
+
     def test_existing_test_job_is_untouched(self):
         self.assertIn("test", workflow()["jobs"])
         wf = workflow()

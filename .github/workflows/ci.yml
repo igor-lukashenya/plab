@@ -3,9 +3,13 @@ name: CI
 on:
   push:
   pull_request:
+    # `edited` re-runs the conventions job after a PR title fix.
+    types: [opened, synchronize, reopened, edited]
 
 jobs:
   test:
+    # A title edit only needs the conventions job.
+    if: github.event_name != 'pull_request' || github.event.action != 'edited'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
