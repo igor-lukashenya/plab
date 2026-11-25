@@ -52,6 +52,15 @@ Run `make help` for the always current list.
 - When editing media compositions, invoke the `/hyperframes` skill first if it is installed.
 - Do not copy the Hyperframes boilerplate agent files into media projects.
 
+## Research practice
+
+Follow the habits in `docs/how-to-research.md`. As an agent:
+
+- At a checkpoint (a result, a decision, a dead end, a surprise), suggest a note once and use the `note` skill if the user agrees. Drop the suggestion if declined; never create notes silently.
+- When a claim rests on an external source, ask for the link and offer to add it to `docs/references.md`. Never add sources silently.
+- Before a case is closed, check that it has notes, a `status` and a report, and say what is missing.
+- Keep evidence (what happened) apart from interpretation (what it means) when drafting summaries and reports.
+
 ## Git conventions
 
 Enforced by `scripts/gitcheck.py`, the hooks in `.githooks/` (enable them once with `make hooks`; `make init` does it for you) and the `conventions` CI job on pull requests.

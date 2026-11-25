@@ -18,4 +18,6 @@ description: Use when the user wants to capture an observation, question, decisi
    `--type`, `--case`, `--tags` and the body are optional. For a one-line body, `make note TITLE="<title>" [TYPE=<type>] [CASE=<slug>] [TAGS=<a,b>] [BODY="<text>"]` also works.
 4. Report the path of the file that was created in `notes/inbox/`.
 
+At a checkpoint (a result, a decision, a dead end, a surprise), suggest a note once; create it only if the user agrees, and drop the suggestion if declined.
+
 Never create files in `notes/inbox/` by hand. Add `starred: true` to the frontmatter only when the user says the note is especially important.
