@@ -16,6 +16,15 @@ Notes live in `notes/inbox/` as `YYYY-MM-DD-HHMM-slug.md`. See `_template.md` fo
 | `status` | `raw` until used in a summary, then `used` |
 | `starred` | `true` to mark a note as especially important (default `false`) |
 
+## What makes a good note
+
+- One idea per note, so it can be filed, found and reused on its own.
+- A title that states the finding ("Second prompt cut retries from 5 to 1"), not a topic ("Prompts").
+- The exact numbers, error text or quote, not a paraphrase.
+- A link to the source or the run log, saved when you found it.
+- Why it matters, in a sentence, and the reason behind any decision.
+- Failures and dead ends too. Keep it rough: a note should take seconds.
+
 ## Capturing
 
 - Make: `make note TITLE="Short title" [TYPE=observation] [CASE=my-case] [TAGS=a,b] [BODY="text"]`

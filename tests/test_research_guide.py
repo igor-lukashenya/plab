@@ -35,6 +35,25 @@ class ResearchGuideTests(unittest.TestCase):
     def test_readme_links_guide(self):
         self.assertIn("docs/how-to-research.md", read("README.md"))
 
+    def test_claude_md_has_research_practice(self):
+        text = read("CLAUDE.md")
+        self.assertIn("## Research practice", text)
+        self.assertIn("docs/how-to-research.md", text)
+
+    def test_notes_readme_has_good_note_section(self):
+        self.assertIn("## What makes a good note", read("notes/README.md"))
+
+    def test_skills_carry_nudges(self):
+        expected = {
+            "note": "suggest",
+            "new-case": "research-definition.md",
+            "write-case-report": "references.md",
+            "synthesize-notes": "evidence",
+        }
+        for skill, token in expected.items():
+            with self.subTest(skill=skill):
+                self.assertIn(token, read(f"skills/{skill}/SKILL.md"))
+
 
 if __name__ == "__main__":
     unittest.main()
