@@ -1,0 +1,4 @@
+# Docs toolchain, pinned for reproducible builds. Dependabot keeps these current.
+mkdocs==1.6.1
+mkdocs-material==9.8.2
+pyyaml==6.0.4

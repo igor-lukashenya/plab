@@ -60,10 +60,15 @@ New to running a research? Read the [research playbook](docs/how-to-research.md)
 
 ## Requirements
 
-- Required: Python 3, Node.js 22 or newer with `npx`, MkDocs (`make install`).
+- Required: Python 3, Node.js 22 or newer with `npx`, MkDocs (`make install`, versions pinned in `requirements.txt`).
 - Optional, for media rendering: `ffmpeg`, `espeak-ng` and the Chrome libraries (`make slides-deps` on Debian/Ubuntu/WSL).
 
 `make doctor` checks all of them.
+
+## Using this template
+
+- The code is MIT licensed (`LICENSE`); change the holder to your own name.
+- `docs/superpowers/` holds the plans and specs used to build the template itself. It is excluded from the site and from `git archive`; delete it in your own project if you don't want it.
 
 ## Make targets
 

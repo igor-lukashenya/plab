@@ -21,7 +21,7 @@ hf = npx --yes hyperframes@$(HF_VERSION)
 
 ## Install MkDocs and dependencies (falls back to a local .venv if pip is externally managed)
 install:
-	pip install mkdocs mkdocs-material pyyaml || { python3 -m venv .venv && .venv/bin/pip install mkdocs mkdocs-material pyyaml; }
+	pip install -r requirements.txt || { python3 -m venv .venv && .venv/bin/pip install -r requirements.txt; }
 
 ## Serve docs locally with live reload
 serve:
