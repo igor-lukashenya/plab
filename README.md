@@ -32,6 +32,8 @@ make serve                                     # docs at http://127.0.0.1:8000
 - `make doctor`: reports missing tools and how to install them.
 - `make hooks`: turns on the git hooks that check branch names and commit messages.
 
+New to running a research? Read the [research playbook](docs/how-to-research.md) for the habits behind these commands.
+
 ## Git conventions
 
 - Branches are `main` or `<type>/<kebab-description>`, for example `feat/note-search` or `fix/init-marker`. Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `ci`, `build`, `perf`, `style`, `revert`.

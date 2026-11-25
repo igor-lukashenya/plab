@@ -29,6 +29,7 @@ exclude_docs: |
 nav:
   - Home: index.md
   - Research:
+      - How to Research: how-to-research.md
       - Executive Summary: executive-summary.md
       - Overview: research-overview.md
       - Definition: research-definition.md
